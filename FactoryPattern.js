@@ -30,15 +30,15 @@ class VehicleFactory {
   create = (vehicleType, options) => {
     let vehicle;
     switch (vehicleType) {
-        case 1:
-            vehicle = new Car(options);
-            break;
-        case 2:
-            vehicle = new Truck(options);
-            break;
-        default:
-            console.log('Vehicle type not covered');
-            break;
+      case 1:
+        vehicle = new Car(options);
+        break;
+      case 2:
+        vehicle = new Truck(options);
+        break;
+      default:
+        console.log('Vehicle type not covered');
+        break;
     }
     vehicle.startEngine = () => console.log(`Reving ${vehicle.vehicleType} engine`);
     vehicle.driveVehicle = (kms) => {

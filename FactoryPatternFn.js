@@ -1,38 +1,93 @@
-function Developer(name) {
-  this.name = name
-  this.type = "Developer"
+function Car(options) {
+  this.brandName = options.name;
+  this.wheels = options.wheels;
+  this.doors = options.doors;
+  this.color = options.color;
+  this.driven = 0
+  this.type = "Car"
 }
 
-function Tester(name) {
-  this.name = name
-  this.type = "Tester"
+function Truck(options) {
+  this.brandName = options.name;
+  this.wheels = options.wheels;
+  this.doors = options.doors;
+  this.color = options.color;
+  this.driven = 0
+  this.type = "Truck"
 }
 
-function EmployeeFactory() {
-  this.create = (name, type) => {
-    switch(type)
-    {
+function VehicleFactory() {
+  this.create = (type, options) => {
+    let vehicle
+    switch(type) {
       case 1:
-        return new Developer(name)
+        vehicle =  new Car(options)
+        break;
       case 2:
-        return new Tester(name)
+        vehicle =  new Truck(options)
+        break;
+      default:
+        console.log('Unidentified Vehicle')
+        break;
     }
+
+    vehicle.drive = (drive) => {
+      console.log(`Driving ${vehicle.type}...`)
+      vehicle.driven = vehicle.driven + drive
+    }
+    return vehicle
   }
 }
 
-function introduce() {
-  console.log("Hello, my name is " + this.name + " and I work as a " + this.type)
+function describe() {
+  console.log(this)
+  console.log(`This is a ${this.brandName} ${this.type} which has ${this.doors} and is in ${this.color} color. It is driven ${this.driven} kms`)
 }
 
-const employeeFactory = new EmployeeFactory()
-const employees = []
+const vehicleFactory = new VehicleFactory()
+const vehicle = []
 
-employees.push(employeeFactory.create("Prashant", 1))
-employees.push(employeeFactory.create("Tony", 2))
-employees.push(employeeFactory.create("Abhinav", 1))
-employees.push(employeeFactory.create("Daljeet", 1))
-employees.push(employeeFactory.create("Jananie", 2))
-
-employees.forEach( emp => {
-  introduce.call(emp)
+const bmwCar = vehicleFactory.create(1, {
+  name: 'BMW',
+  wheels: 4,
+  doors: 2,
+  color: 'Black'
 })
+bmwCar.drive(500)
+
+vehicle.push(bmwCar)
+
+const merTruck = vehicleFactory.create(2, {
+  name: 'Mercedes Banez',
+  wheels: 8,
+  doors: 2,
+  color: 'Black'
+})
+merTruck.drive(1500)
+vehicle.push(merTruck)
+
+vehicle.forEach( emp => describe.call(emp))
+
+// OUTPUT:
+// Driving Car...
+// Driving Truck...
+// Car {
+//   brandName: 'BMW',
+//   wheels: 4,
+//   doors: 2,
+//   color: 'Black',
+//   driven: 500,
+//   type: 'Car',
+//   drive: [Function (anonymous)]
+// }
+// This is a BMW Car which has 2 and is in Black color. It is driven 500 kms
+// Truck {
+//   brandName: 'Mercedes Banez',
+//   wheels: 8,
+//   doors: 2,
+//   color: 'Black',
+//   driven: 1500,
+//   type: 'Truck',
+//   drive: [Function (anonymous)]
+// }
+// This is a Mercedes Banez Truck which has 2 and is in Black color. It is driven 1500 kms
